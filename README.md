@@ -46,7 +46,7 @@ To build the updated container image containing the pki certificate and key usin
 4. Deploy the application using the following command `oc new-app --code="." --name=httpd --strategy=docker --loglevel=7` . Feel free to change the name of the application if desired
 5. Build the container image with the SSL certificate overlaid inside using `oc start-build httpd --from-dir=. --follow`
 
-Once the application is successfully build you should be able to review the various k8 objects like the deployment, service ...
+Once the application is successfully built and deployed, you should be able to review the various k8 objects like the deployment, service ...
 
 ### Create the Routes
 
@@ -58,7 +58,7 @@ Create the default unsecure route using
 ```
 oc expose service httpd
 ```  
-Once the route is create you can retrieve the route using 
+Once the route is created you can retrieve the route using 
 ```
 oc get route httpd -ojsonpath='{"http://"}{.spec.host}{"\n"}'
 ```   
@@ -70,7 +70,7 @@ Create the edge route using
 ```
 oc create route edge httpd-edge --service=httpd --port=8080
 ```  
-Once the route is create you can retrieve the route using 
+Once the route is created you can retrieve the route using 
 ```
 oc get route httpd-edge -ojsonpath='{"https://"}{.spec.host}{"\n"}'
 ```   
@@ -82,7 +82,7 @@ Create the passthrough route using
 ```
 oc create route passthrough httpd-passthrough --service=httpd --port=8443
 ```  
-Once the route is create you can retrieve the route using 
+Once the route is created you can retrieve the route using 
 ```
 oc get route httpd-passthrough -ojsonpath='{"https://"}{.spec.host}{"\n"}'
 ```   
@@ -94,7 +94,7 @@ Create the reencrypt route using
 ```
 oc create route reencrypt httpd-reencrypt --service=httpd --port=8443 --dest-ca-cert=ca/ca.crt
 ```  
-Once the route is create you can retrieve the route using 
+Once the route is created you can retrieve the route using 
 ```
 oc get route httpd-reencrypt -ojsonpath='{"https://"}{.spec.host}{"\n"}'
 ```  
