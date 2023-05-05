@@ -54,26 +54,26 @@ Expose the various routes using the following commands
 
 #### Create unsecure route
 
-Create the default unsecure route using `oc expose service httpd`
-Once the route is create you can retrieve the route using `oc get route httpd -ojsonpath='{"http://"}{.spec.host}{"\n"}'` 
+Create the default unsecure route using `oc expose service httpd`  
+Once the route is create you can retrieve the route using `oc get route httpd -ojsonpath='{"http://"}{.spec.host}{"\n"}'`   
 You can now use your browser to navigate to the route or use curl to query the route. 
 
 #### Create edge route
 
-Create the edge route using `oc create route edge httpd-edge --service=httpd --port=8080`
-Once the route is create you can retrieve the route using `oc get route httpd-edge -ojsonpath='{"https://"}{.spec.host}{"\n"}'` 
+Create the edge route using `oc create route edge httpd-edge --service=httpd --port=8080`  
+Once the route is create you can retrieve the route using `oc get route httpd-edge -ojsonpath='{"https://"}{.spec.host}{"\n"}'`   
 You can now use your browser to navigate to the route or use curl to query the route. 
 
 #### Create passthrough route 
 
-Create the passthrough route using `oc create route passthrough httpd-passthrough --service=httpd --port=8443`
-Once the route is create you can retrieve the route using `oc get route httpd-passthrough -ojsonpath='{"https://"}{.spec.host}{"\n"}'` 
+Create the passthrough route using `oc create route passthrough httpd-passthrough --service=httpd --port=8443`  
+Once the route is create you can retrieve the route using `oc get route httpd-passthrough -ojsonpath='{"https://"}{.spec.host}{"\n"}'`   
 You can now use your browser to navigate to the route or use curl to query the route. 
 
 #### Create reencrypt route
 
-Create the reencrypt route using `oc create route reencrypt httpd-reencrypt --service=httpd --port=8443 --dest-ca-cert=ca/ca.crt`
-Once the route is create you can retrieve the route using `oc get route httpd-reencrypt -ojsonpath='{"https://"}{.spec.host}{"\n"}'` 
-You can now use your browser to navigate to the route or use curl to query the route. 
+Create the reencrypt route using `oc create route reencrypt httpd-reencrypt --service=httpd --port=8443 --dest-ca-cert=ca/ca.crt`  
+Once the route is create you can retrieve the route using `oc get route httpd-reencrypt -ojsonpath='{"https://"}{.spec.host}{"\n"}'`  
+You can now use your browser to navigate to the route or use curl to query the route.   
 
 > : Warning **Note that to create the reencrypt route the only certificate attribute needed is the dest-ca-cert. If you set both the dest-ca-cert and the ca-cert you get the 'application not available' error.**
