@@ -31,10 +31,10 @@ To deploy the application with secure routes use the following steps
 If needed (or necessary) regenerate the certificates using the following steps. This step is not required since default certificate and key are provided but in case they expire this might be needed.
 
 1. Clone the repository container the self signed certificate playbook from https://github.com/cadjai/generate-custom-certificates.git
-2. Change into the clone custom certificates playbook directory 
-3. Update the variables to reflect your desired common name service ...
+2. Change into the cloned custom certificates playbook directory 
+3. Update the variables to reflect your desired common name,  service ...
 4. Run the playbook to generate the self signed CA and certificates using `ansible-playbook create-self-signed-certs.yml`
-5. Copy the appropriates certificates into the httpd-ssl directory of the httpd-ex application (copy cert and key)
+5. Copy the appropriates certificates into the httpd-ssl directory of the httpd-ex application (copy CA, cert and key)
 
 
 ### Build and run the application
@@ -42,7 +42,7 @@ To build the updated container image containing the pki certificate and key usin
 
 1. Login to the cluster
 2. Create a new project using `oc new-project <project-name>` or change into an existing project using `oc project <project-name>`
-3. Ensure you are back into the clone httpd application directory
+3. Ensure you are back into the cloned httpd application directory
 4. Deploy the application using the following command `oc new-app --code="." --name=httpd --strategy=docker --loglevel=7` . Feel free to change the name of the application if desired
 5. Build the container image with the SSL certificate overlaid inside using `oc start-build httpd --from-dir=. --follow`
 
@@ -101,3 +101,6 @@ oc get route httpd-reencrypt -ojsonpath='{"https://"}{.spec.host}{"\n"}'
 You can now use your browser to navigate to the route or use curl to query the route.   
 
 > : Warning **Note that to create the reencrypt route the only certificate attribute needed is the dest-ca-cert. If you set both the dest-ca-cert and the ca-cert you get the 'application not available' error.**
+
+For the secure route generated above you can also add path and/or hostname to the command if needed. 
+> : Warning If using path with reencrypt route on an OpenShift 4.10.x, ensure that the pod has TLS1.3 enabled. We have seen an issue where with path enabled the route stopped working and it took a lot of troubleshooting to get to the bottom of this. 
